@@ -9,11 +9,18 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-from config import DATASET_PATH, FRONTIER_DISTANCE_KM, PARTIDOS_AMBA_PATH
+from config import CSV_DATASET_PATH, DATASET_PATH, DEPLOY_DATASET_PATH, FRONTIER_DISTANCE_KM, PARTIDOS_AMBA_PATH
 
 
 @st.cache_data(show_spinner=False)
 def load_data() -> pd.DataFrame:
+    if not Path(DATASET_PATH).exists():
+        candidates = [str(DEPLOY_DATASET_PATH), str(CSV_DATASET_PATH)]
+        raise FileNotFoundError(
+            "No se encontro el dataset de la app. "
+            f"Rutas probadas: {candidates}. "
+            "En deploy, subir data/processed/estaciones_streamlit.csv.gz."
+        )
     df = pd.read_csv(DATASET_PATH, parse_dates=["periodo", "fecha_baja"], low_memory=False)
     if "activa_en_periodo" in df.columns:
         df["activa_en_periodo"] = df["activa_en_periodo"].astype(bool)

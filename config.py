@@ -14,9 +14,18 @@ TASA_VIAL_PATH = RAW_DIR / "Tasa_Vial_Buenos_Aires_2025.xlsx"
 PARQUET_PATH = PROCESSED_DIR / "estaciones.parquet"
 CSV_DATASET_PATH = PROCESSED_DIR / "estaciones.csv"
 DEPLOY_DATASET_PATH = PROCESSED_DIR / "estaciones_streamlit.csv.gz"
-DATASET_PATH = DEPLOY_DATASET_PATH if DEPLOY_DATASET_PATH.exists() else CSV_DATASET_PATH
 CLEANING_REPORT_PATH = PROCESSED_DIR / "cleaning_report.csv"
 PARTIDOS_AMBA_PATH = PROCESSED_DIR / "partidos_amba_ba.geojson"
+
+
+def resolve_dataset_path() -> Path:
+    for candidate in (DEPLOY_DATASET_PATH, CSV_DATASET_PATH):
+        if candidate.exists():
+            return candidate
+    return DEPLOY_DATASET_PATH
+
+
+DATASET_PATH = resolve_dataset_path()
 
 AMBA_PROVINCES = [
     "Ciudad Autónoma de Buenos Aires",
