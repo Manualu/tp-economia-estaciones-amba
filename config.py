@@ -26,7 +26,6 @@ def resolve_dataset_path() -> Path:
 
 
 DATASET_PATH = resolve_dataset_path()
-
 AMBA_PROVINCES = [
     "Ciudad Autónoma de Buenos Aires",
     "Buenos Aires",
