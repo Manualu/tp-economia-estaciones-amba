@@ -1,0 +1,9 @@
+data/raw/*.xlsx
+data/processed/*.parquet
+data/processed/*.csv
+!data/processed/cleaning_report.csv
+!data/processed/estaciones_streamlit.csv.gz
+!data/processed/partidos_amba_ba.geojson
+__pycache__/
+.pytest_cache/
+.venv/
